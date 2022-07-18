@@ -1,0 +1,25 @@
+.contenedor-scroll::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.contenedor-scroll::-webkit-scrollbar:vertical {
+    width:8px;
+}
+
+.contenedor-scroll::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.contenedor-scroll::-webkit-scrollbar:horizontal {
+    height: 8px;
+}
+
+.contenedor-scroll::-webkit-scrollbar-thumb {
+    background-color: #aaaaaa;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.contenedor-scroll::-webkit-scrollbar-track {
+    border-radius: 8px;  
+}
