@@ -3,10 +3,14 @@ import { createContext } from 'react';
 
 interface ContextProps {
     sidemenuOpen: boolean,
+    isAddingEntry: boolean,
+    isDragging: boolean,
+    
     openSideMenu: ()=>void,
     closedSideMenu: ()=>void,
-    isAddingEntry: boolean,
     setIsAddingEntry: (isAdding: boolean)=>void,
+    setStartDraggin: ()=>void,
+    setEndDraggin: ()=>void,
 }
 
 

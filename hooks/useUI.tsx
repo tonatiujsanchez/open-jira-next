@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { UIContext } from '../context/ui'
 
-export const useSidebar = () => {
+export const useUI = () => {
   return useContext( UIContext )
 }

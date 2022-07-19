@@ -3,12 +3,12 @@ import { FC } from "react"
 import { AppBar, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
-import { useSidebar } from "../../hooks/useSidebar";
+import { useUI } from "../../hooks/useUI";
 import { darkTheme } from "../../themes";
 
 export const Navbar: FC = () => {
 
-    const { openSideMenu } = useSidebar()    
+    const { openSideMenu } = useUI()    
 
 
     return (

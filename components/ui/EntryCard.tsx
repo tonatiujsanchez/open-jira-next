@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardActions, CardContent, Typography } from '@mui/material';
-import { FC } from 'react';
+import { DragEvent, FC } from 'react';
+import { useUI } from '../../hooks/useUI';
 import { Entry } from '../../interfaces';
 
 
@@ -9,11 +10,24 @@ interface Props {
 
 export const EntryCard: FC<Props> = ({ entry }) => {
 
+    const { setStartDraggin, setEndDraggin } = useUI()
+
+    const onDragStart = (event: DragEvent<HTMLDivElement>) => {
+        event.dataTransfer.setData('entryDrop', entry._id )
+        setStartDraggin()
+    }
+
+    const onDragEnd = () => {
+        setEndDraggin()
+    }
 
     return (
-        <Card sx={{
-            marginBottom: 1
-        }} elevation={2} >
+        <Card 
+            sx={{ marginBottom: 1 }} 
+            elevation={2}
+            draggable
+            onDragStart={onDragStart}
+            onDragEnd={onDragEnd} >
             <CardActionArea>
                 <CardContent>
                     <Typography sx={{ whiteSpace: 'pre-line' }}>

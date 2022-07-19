@@ -5,16 +5,15 @@ import SaveIcon from '@mui/icons-material/Save';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { useEntries } from '../../hooks/useEntries';
-import { useSidebar } from '../../hooks/useSidebar';
+import { useUI } from '../../hooks/useUI';
 
 export const NewEntry = () => {
 
-    // const [isAdding, setIsAdding] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const [touched, setTouched] = useState(false)
 
     const { addNewEntry } = useEntries()
-    const { isAddingEntry, setIsAddingEntry } = useSidebar()
+    const { isAddingEntry, setIsAddingEntry } = useUI()
 
     const onTextFieldChanges = ( event:ChangeEvent<HTMLInputElement> ) => {
         setInputValue(event.target.value)

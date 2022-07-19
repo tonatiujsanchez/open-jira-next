@@ -11,12 +11,12 @@ import {
 
 import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
-import { useSidebar } from '../../hooks/useSidebar';
+import { useUI } from '../../hooks/useUI';
 const menuItems: String[] = ['Inbox', 'Starred', 'Send Email', 'Drafts']
 
 export const Sidebar = () => {
 
-    const { sidemenuOpen, closedSideMenu } = useSidebar()    
+    const { sidemenuOpen, closedSideMenu } = useUI()    
 
     return (
         <Drawer
