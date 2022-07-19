@@ -24,7 +24,7 @@ export const EntryList:FC<Props> = ({ status }) => {
         // TODO: aqui haremos drop
         <div>
             <Paper sx={{ 
-                height: 'calc(100vh - 200px)', 
+                height: 'calc(100vh - 260px)', 
                 overflow: 'auto',
                 backgroundColor: 'transparent',
                 padding: 1,

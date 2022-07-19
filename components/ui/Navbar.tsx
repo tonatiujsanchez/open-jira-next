@@ -1,9 +1,10 @@
 import { FC } from "react"
 
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
 import { useSidebar } from "../../hooks/useSidebar";
+import { darkTheme } from "../../themes";
 
 export const Navbar: FC = () => {
 
@@ -13,6 +14,7 @@ export const Navbar: FC = () => {
     return (
         <AppBar position="sticky">
             <Toolbar>
+            <ThemeProvider theme={darkTheme} >
                 <IconButton
                     size="large"
                     edge="start"
@@ -21,6 +23,7 @@ export const Navbar: FC = () => {
                     <MenuOutlinedIcon />
                 </IconButton>
                 <Typography variant="h6">Open Jira</Typography>
+            </ThemeProvider>
             </Toolbar>
         </AppBar>
     )

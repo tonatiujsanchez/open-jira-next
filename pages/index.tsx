@@ -3,16 +3,16 @@ import type { NextPage } from 'next'
 import { Card, CardContent, CardHeader, Grid, Typography } from '@mui/material'
 
 import { Layout } from '../components/layouts'
-import { EntryList } from '../components/ui'
+import { EntryList, NewEntry } from '../components/ui'
 
 const HomePage: NextPage = () => {
     return (
         <Layout title='Home | Open Jira'>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={4} >
-                    <Card sx={{ height: 'calc(100vh - 100px)' }}>
+                    <Card sx={{ height: 'calc(100vh - 90px)' }}>
                         <CardHeader title="Pendientes" />
-                        {/* Agregar nueva tarea */}
+                        <NewEntry />
                         <EntryList status='pending' />
                     </Card>
                 </Grid>

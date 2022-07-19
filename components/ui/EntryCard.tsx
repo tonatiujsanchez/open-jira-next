@@ -16,7 +16,7 @@ export const EntryCard: FC<Props> = ({ entry }) => {
         }} elevation={2} >
             <CardActionArea>
                 <CardContent>
-                    <Typography sx={{ widthSpace: 'pre-line' }}>
+                    <Typography sx={{ whiteSpace: 'pre-line' }}>
                         { entry.description }
                     </Typography>
                 </CardContent>

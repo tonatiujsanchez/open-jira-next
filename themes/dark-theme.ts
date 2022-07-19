@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { deepPurple, red } from "@mui/material/colors";
+import { deepPurple, lightBlue, red } from "@mui/material/colors";
 
 
 export const darkTheme = createTheme({
@@ -19,7 +19,7 @@ export const darkTheme = createTheme({
             },
             styleOverrides: {
                 root: {
-                    backgroundColor: deepPurple.A700,
+                    backgroundColor: lightBlue[900],
                 },
                 
             },
