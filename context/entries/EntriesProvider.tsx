@@ -17,26 +17,7 @@ export interface EntriesState {
 }
 
 const Entries_INITIAL_STATE: EntriesState = {
-    entries: [
-        {
-            _id: uuidv4(),
-            description: 'pending-Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.',
-            createdAd: Date.now(),
-            status: 'pending'
-        },
-        {
-            _id: uuidv4(),
-            description: 'in-progress-Vitae aliquet nec ullamcorper sit amet. Senectus et netus et malesuada fames ac.',
-            createdAd: Date.now() - 1000000,
-            status: 'in-progress'
-        },
-        {
-            _id: uuidv4(),
-            description: 'finished-Ultrices mi tempus imperdiet nulla. Sagittis id consectetur purus ut faucibus pulvinar elementum integer enim.',
-            createdAd: Date.now() - 100000,
-            status: 'finished'
-        },
-    ],
+    entries: [],
 }
 
 
