@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
 
-
 /*
 * 0 = disconnected    //Desconetado
 * 1 = connected       //Conectado
 * 2 = connnecting     //Conectando
 * 2 = disconnecting   //Desconectando
 */
-
 
 const mongoConnection = {
     isConnected: 0
