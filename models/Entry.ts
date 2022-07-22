@@ -21,9 +21,13 @@ const entrySchema = new Schema({
             message: '{VALUE} no es un estado permitido'
         },
         default: 'pending',
+    },
+    views: {
+        type: Number,
+        require: true,
+        default: 0,
     }
 })
-
 
 const EntryModel: Model<IEntry> = mongoose.models.Entry || mongoose.model('Entry', entrySchema)
 

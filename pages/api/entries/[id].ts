@@ -9,7 +9,7 @@ type Data =
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
-    const { id='' } = req.query
+    const { id = '' } = req.query
 
     if( !mongoose.isValidObjectId( id ) ){
         return res.status(400).json({message: `${id} no es un id valido`})
@@ -39,6 +39,10 @@ const getEntry = async ( req:NextApiRequest, res: NextApiResponse<Data>) => {
         await db.disconnect()
         return res.status(400).json({ message: 'No hay ninguna entrada con ese ID' })
     }
+
+    // Contador de visitas
+    entry.views = entry.views + 1
+    entry.save() 
 
     await db.disconnect()
     return res.status(200).json(entry)
