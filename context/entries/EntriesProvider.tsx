@@ -12,7 +12,6 @@ interface Props {
 
 export interface EntriesState {
     entries: Entry[];
-
 }
 
 const Entries_INITIAL_STATE: EntriesState = {

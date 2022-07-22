@@ -28,9 +28,20 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 }
 
-const getEntry = async ( eq:NextApiRequest, res: NextApiResponse<Data>) => {
+const getEntry = async ( req:NextApiRequest, res: NextApiResponse<Data>) => {
 
-    return res.status(200).json({ message: 'Entry por GET' })
+    const { id } = req.query
+    await db.connect()
+
+    const entry = await Entry.findById( id )
+
+    if(!entry){
+        await db.disconnect()
+        return res.status(400).json({ message: 'No hay ninguna entrada con ese ID' })
+    }
+
+    await db.disconnect()
+    return res.status(200).json(entry)
 }
 
 
