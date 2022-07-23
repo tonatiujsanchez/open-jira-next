@@ -1,6 +1,7 @@
 import { FC, useReducer } from 'react';
 import { UIContext } from './';
-import { uiReducer } from './uiReducer';
+import uiReducer from './uiReducer';
+
 
 
 

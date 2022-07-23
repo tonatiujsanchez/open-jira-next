@@ -8,7 +8,7 @@ type UIActionType =
     | { type: "[UI] - Start Draggin" }
     | { type: "[UI] - End Draggin" }
 
-export const uiReducer = (state: UIState, action: UIActionType): UIState => {
+const uiReducer = (state: UIState, action: UIActionType): UIState => {
 
     switch (action.type) {
         case '[UI] - Open Siderbar':
@@ -40,3 +40,5 @@ export const uiReducer = (state: UIState, action: UIActionType): UIState => {
             return state
     }
 }
+
+export default uiReducer
