@@ -2,6 +2,8 @@ import { isValidObjectId } from "mongoose";
 import { db } from "./";
 import { Entry, IEntry } from "../models";
 
+// import { Entry } from "../interfaces"
+
 
 export const getEntryById = async(id: string): Promise<IEntry | null> => {
 
@@ -21,6 +23,9 @@ export const getEntryById = async(id: string): Promise<IEntry | null> => {
     entry.save() 
 
     await db.disconnect()
+
+    // const resp = await fetch(`/api/entris/${id}`)
+    // const entry = await resp.json()
 
     return JSON.parse( JSON.stringify(entry) )
 }
