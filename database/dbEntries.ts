@@ -20,7 +20,7 @@ export const getEntryById = async(id: string): Promise<IEntry | null> => {
     }
     
     entry.views = entry.views + 1
-    entry.save() 
+    await entry.save() 
 
     await db.disconnect()
 
