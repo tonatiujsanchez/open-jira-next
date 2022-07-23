@@ -1,70 +1,91 @@
-import { ChangeEvent, useState, useMemo } from 'react';
+import { ChangeEvent, useState, useMemo, FC } from 'react';
+import { GetServerSideProps } from 'next'
+
 import {
-    capitalize, 
-    Button, 
-    Card, 
-    CardActions, 
-    CardContent, 
-    CardHeader, 
-    FormControl, 
-    FormControlLabel, 
-    FormLabel, 
-    Grid, 
-    Radio, 
-    RadioGroup, 
+    capitalize,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Grid,
+    Radio,
+    RadioGroup,
     TextField,
-    IconButton, 
+    IconButton,
+    Typography,
 } from "@mui/material"
+
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 import { Layout } from "../../components/layouts"
 
-import { EntryStatus } from '../../interfaces/entry';
+import { Entry, EntryStatus } from '../../interfaces/entry';
+
+import { dbEntries } from '../../database';
+import { useEntries } from '../../hooks/useEntries';
+import { dateFunctions } from '../../utils';
 
 
-const validStatus: EntryStatus[] = ["pending", "in-progress","finished"]
+const validStatus: EntryStatus[] = ["pending", "in-progress", "finished"]
+
+interface Props {
+    entry: Entry
+}
 
 
+const EntryPage: FC<Props> = ({ entry }) => {
 
-
-const EntryPage = () => {
-
-
-    const [inputValue, setInputValue] = useState('')
-    const [status, setStatus] = useState<EntryStatus>('pending')
+    const [inputValue, setInputValue] = useState(entry.description)
+    const [status, setStatus] = useState<EntryStatus>(entry.status)
     const [touched, setTouched] = useState(false)
 
-    const isNotValid = useMemo(()=> inputValue.length <= 0 && touched,[inputValue, touched])
+    const { updateEntry } = useEntries()
 
-    const onTextFieldChanges = ( event:ChangeEvent<HTMLInputElement> ) => {
+    const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
+
+    const onTextFieldChanges = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value)
     }
 
-    const onStatusChanged = (event:ChangeEvent<HTMLInputElement>) => {
+    const onStatusChanged = (event: ChangeEvent<HTMLInputElement>) => {
         setStatus(event.target.value as EntryStatus)
     }
 
-    const onSave = () =>{
-        console.log(inputValue);
-        console.log(status);        
+    const onSave = () => {
+
+        if( inputValue.trim().length === 0 ) return
+
+        const newEntry: Entry = {
+            ...entry,
+            description: inputValue,
+            status,
+        }
+
+        updateEntry(newEntry, true)
     }
 
 
     return (
-        <Layout title="Entry Name ---">
-            <Grid 
-                container 
+        <Layout title={`${inputValue.substring(0, 25)}...`}>
+            <Grid
+                container
                 justifyContent='center'
                 sx={{ marginTop: 2 }}
             >
                 <Grid item xs={12} sm={8} md={6}>
                     <Card>
-                        <CardHeader 
+                        <CardHeader
                             title={`Entrada: ${inputValue}`}
-                            subheader={'Creada hace ...'}
+                            subheader={`Creada ${dateFunctions.getFormatDistanceToNow(entry.createdAd)}`}
                         />
+
                         <CardContent>
+
                             <TextField
                                 sx={{ marginTop: 2, marginBottom: 1 }}
                                 fullWidth
@@ -73,9 +94,9 @@ const EntryPage = () => {
                                 multiline
                                 label="Entrada"
                                 value={inputValue}
-                                onBlur={ ()=>setTouched(true) }
-                                onChange={ onTextFieldChanges}
-                                helperText={ isNotValid && 'Ingrese un valor'}
+                                onBlur={() => setTouched(true)}
+                                onChange={onTextFieldChanges}
+                                helperText={isNotValid && 'Ingrese un valor'}
                                 error={isNotValid}
                             />
 
@@ -86,21 +107,23 @@ const EntryPage = () => {
                                 <FormLabel>Estado:</FormLabel>
                                 <RadioGroup
                                     row
-                                    value={ status }
-                                    onChange={ onStatusChanged }
+                                    value={status}
+                                    onChange={onStatusChanged}
                                 >
                                     {
-                                        validStatus.map( option => (
+                                        validStatus.map(option => (
                                             <FormControlLabel
                                                 key={option}
                                                 value={option}
-                                                control={ <Radio /> }
-                                                label={ capitalize(option) }
+                                                control={<Radio />}
+                                                label={capitalize(option)}
                                             />
                                         ))
                                     }
                                 </RadioGroup>
                             </FormControl>
+                            <Typography variant='body2'>Views: {entry.views}</Typography>
+
                         </CardContent>
                         <CardActions>
                             <Button
@@ -108,7 +131,7 @@ const EntryPage = () => {
                                 variant="contained"
                                 fullWidth
                                 onClick={onSave}
-                                disabled={ inputValue.length <= 0 }
+                                disabled={inputValue.length <= 0}
                             >
                                 Save
                             </Button>
@@ -116,7 +139,7 @@ const EntryPage = () => {
                     </Card>
                 </Grid>
                 <IconButton
-                    sx={{ 
+                    sx={{
                         position: 'fixed',
                         bottom: 30,
                         right: 30,
@@ -129,6 +152,37 @@ const EntryPage = () => {
             </Grid>
         </Layout>
     )
+}
+
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+
+    const { id } = params as { id: string }
+
+    const entry = await dbEntries.getEntryById(id)
+
+    if (!entry) {
+
+        return {
+            // notFound: true
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+
+    }
+
+
+
+
+    return {
+        props: {
+            entry: entry
+        }
+    }
 }
 
 export default EntryPage

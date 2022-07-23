@@ -1,9 +1,10 @@
-import { FC, useEffect, useReducer } from 'react';
+import { FC, useEffect, useReducer } from 'react'
+import { useSnackbar } from 'notistack'
 
-import { Entry } from '../../interfaces';
+import { Entry } from '../../interfaces'
 
-import { EntriesContext, entriesReducer } from './';
-import entriesApi from '../../apis/entriesApi';
+import { EntriesContext, entriesReducer } from './'
+import entriesApi from '../../apis/entriesApi'
 
 
 interface Props {
@@ -21,17 +22,10 @@ const Entries_INITIAL_STATE: EntriesState = {
 
 export const EntriesProvider: FC<Props> = ({ children }) => {
 
-
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE)
+    const { enqueueSnackbar } = useSnackbar()
 
     const addNewEntry = async( description: string ) => {
-
-        // const newAntry: Entry = {
-        //     _id: uuidv4(),
-        //     description: description,
-        //     createdAd: Date.now(),
-        //     status: 'pending' 
-        // }
 
         try {
             const { data } = await entriesApi.post<Entry>('/entries', {description})
@@ -45,7 +39,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
 
     }
 
-    const updateEntry = async( entry: Entry ) => {
+    const updateEntry = async( entry: Entry, showSnackbar: boolean = false ) => {
 
         const { _id, description, status } = entry
 
@@ -55,6 +49,17 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
                 type: '[Entry] Entry-Updated', 
                 payload: data 
             })
+
+            if(showSnackbar){
+                enqueueSnackbar('Entrada actualizada',{
+                    variant: 'success',
+                    autoHideDuration: 1000,
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }
+                })
+            }
         } catch (error) {
             console.log({error})
         }

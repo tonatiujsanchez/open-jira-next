@@ -1,6 +1,7 @@
 import { FC } from "react"
+import NextLink from "next/link";
 
-import { AppBar, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Link, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
 import { useUI } from "../../hooks/useUI";
@@ -22,7 +23,11 @@ export const Navbar: FC = () => {
                 >
                     <MenuOutlinedIcon />
                 </IconButton>
-                <Typography variant="h6">Open Jira</Typography>
+                <NextLink href="/" passHref>
+                    <Link underline="none" color="white">
+                        <Typography variant="h6">Open Jira</Typography>
+                    </Link>
+                </NextLink>
             </ThemeProvider>
             </Toolbar>
         </AppBar>
