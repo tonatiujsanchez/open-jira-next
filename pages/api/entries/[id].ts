@@ -42,7 +42,7 @@ const getEntry = async ( req:NextApiRequest, res: NextApiResponse<Data>) => {
 
     // Contador de visitas
     entry.views = entry.views + 1
-    entry.save() 
+    await entry.save() 
 
     await db.disconnect()
     return res.status(200).json(entry)
