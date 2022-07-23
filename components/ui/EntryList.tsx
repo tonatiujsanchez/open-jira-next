@@ -8,7 +8,7 @@ import { EntryStatus } from '../../interfaces';
 import { useEntries } from "../../hooks/useEntries";
 import { useUI } from "../../hooks/useUI";
 
-import styles from './Entrylist.module.css'
+import styles from '../../styles/Entrylist.module.css'
 
 
 interface Props {
