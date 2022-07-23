@@ -102,11 +102,10 @@ const removeEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(400).json({ message: 'No hay ninguna entrada con ese ID' })
     }
 
-
-
     try {
         
         await entry.deleteOne()
+        await db.disconnect()
         return res.status(200).json({ message: 'Entrada eliminada' })
 
     } catch (error: any) {

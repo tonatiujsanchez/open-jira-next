@@ -72,8 +72,8 @@ const EntryPage: FC<Props> = ({ entry }) => {
         updateEntry(newEntry, true)
     }
 
-    const onRemove = () => {
-        removeEntry(entry._id)
+    const onRemove = async() => {
+        await removeEntry(entry._id)
         router.replace('/')
     }
 
