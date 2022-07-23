@@ -8,8 +8,6 @@ import { EntryStatus } from '../../interfaces';
 import { useEntries } from "../../hooks/useEntries";
 import { useUI } from "../../hooks/useUI";
 
-import styles from '../../styles/Entrylist.module.css'
-
 
 interface Props {
     status: EntryStatus
@@ -52,7 +50,7 @@ export const EntryList:FC<Props> = ({ status }) => {
         <div 
             onDrop={onDropEntry}
             onDragOver={ allowDrop }
-            className={ isDragging ? styles.dragging : '' }
+            className={ isDragging ? 'dragging' : '' }
         >
             <Paper sx={{ 
                 height: 'calc(100vh - 260px)', 
