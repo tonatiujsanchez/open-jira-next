@@ -25,33 +25,33 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE)
     const { enqueueSnackbar } = useSnackbar()
 
-    const addNewEntry = async( description: string ) => {
+    const addNewEntry = async (description: string) => {
 
         try {
-            const { data } = await entriesApi.post<Entry>('/entries', {description})
+            const { data } = await entriesApi.post<Entry>('/entries', { description })
             dispatch({
                 type: '[Entry] Add-Entry',
                 payload: data
             })
         } catch (error) {
-            console.log({error})
+            console.log({ error })
         }
 
     }
 
-    const updateEntry = async( entry: Entry, showSnackbar: boolean = false ) => {
+    const updateEntry = async (entry: Entry, showSnackbar: boolean = false) => {
 
         const { _id, description, status } = entry
 
         try {
             const { data } = await entriesApi.put(`/entries/${_id}`, { description, status })
-            dispatch({ 
-                type: '[Entry] Entry-Updated', 
-                payload: data 
+            dispatch({
+                type: '[Entry] Entry-Updated',
+                payload: data
             })
 
-            if(showSnackbar){
-                enqueueSnackbar('Entrada actualizada',{
+            if (showSnackbar) {
+                enqueueSnackbar('Entrada actualizada', {
                     variant: 'success',
                     autoHideDuration: 1000,
                     anchorOrigin: {
@@ -61,27 +61,52 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
                 })
             }
         } catch (error) {
-            console.log({error})
+            console.log({ error })
         }
 
     }
 
-    const refreshEntries = async()=> {
+    const removeEntry = async (idEntry: string) => {
+        try {
+            
+            const { data } = await entriesApi.delete(`/entries/${idEntry}`)
+              
+            dispatch({
+                type: '[Entry] Entry-Remove',
+                payload: idEntry
+            })
+            
+            enqueueSnackbar(data.message, {
+                variant: 'error',
+                autoHideDuration: 1000,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right'
+                }
+            })
+        } catch (error) {
+
+        }
+
+    }
+
+    const refreshEntries = async () => {
         const { data } = await entriesApi.get<Entry[]>('/entries')
-        dispatch({type:'[Entry] Refresh-Data', payload: data })
+        dispatch({ type: '[Entry] Refresh-Data', payload: data })
     }
 
 
     useEffect(() => {
         refreshEntries()
     }, [])
-    
+
 
     return (
         <EntriesContext.Provider value={{
             ...state,
             addNewEntry,
-            updateEntry
+            updateEntry,
+            removeEntry
         }}>
             {children}
         </EntriesContext.Provider>

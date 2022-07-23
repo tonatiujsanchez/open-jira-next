@@ -5,6 +5,7 @@ import { EntriesState } from './';
 type EntriesActionType =
     | { type: '[Entry] Add-Entry', payload: Entry }
     | { type: '[Entry] Entry-Updated', payload: Entry }
+    | { type: '[Entry] Entry-Remove', payload: string }
     | { type: '[Entry] Refresh-Data', payload: Entry[] }
 
 export const entriesReducer = (state: EntriesState, action: EntriesActionType): EntriesState => {
@@ -13,14 +14,19 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
         case '[Entry] Add-Entry':
             return {
                 ...state,
-                entries: [ ...state.entries, action.payload ]
+                entries: [...state.entries, action.payload]
             }
         case '[Entry] Entry-Updated':
             return {
                 ...state,
-                entries: state.entries.map( 
-                    entry => ( entry._id === action.payload._id ? action.payload : entry )
+                entries: state.entries.map(
+                    entry => (entry._id === action.payload._id ? action.payload : entry)
                 )
+            }
+        case '[Entry] Entry-Remove':
+            return {
+                ...state,
+                entries: state.entries.filter( entry => (entry._id !== action.payload ) )
             }
         case '[Entry] Refresh-Data':
             return {

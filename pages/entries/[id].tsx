@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useMemo, FC } from 'react';
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router';
 
 import {
     capitalize,
@@ -44,7 +45,9 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const [status, setStatus] = useState<EntryStatus>(entry.status)
     const [touched, setTouched] = useState(false)
 
-    const { updateEntry } = useEntries()
+    const router = useRouter()
+
+    const { updateEntry, removeEntry } = useEntries()
 
     const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched])
 
@@ -67,6 +70,11 @@ const EntryPage: FC<Props> = ({ entry }) => {
         }
 
         updateEntry(newEntry, true)
+    }
+
+    const onRemove = () => {
+        removeEntry(entry._id)
+        router.replace('/')
     }
 
 
@@ -139,6 +147,7 @@ const EntryPage: FC<Props> = ({ entry }) => {
                     </Card>
                 </Grid>
                 <IconButton
+                    onClick={ onRemove }
                     sx={{
                         position: 'fixed',
                         bottom: 30,
